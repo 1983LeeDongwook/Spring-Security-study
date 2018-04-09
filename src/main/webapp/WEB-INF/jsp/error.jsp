@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h1>Error</h1>
+<h1>이미 로그인 중입니다.</h1>
 
 </body>
 </html>

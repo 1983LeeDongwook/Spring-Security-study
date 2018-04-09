@@ -21,6 +21,7 @@
         <label>
             <input type="password" class="form-control" placeholder="password" name="pw">
         </label>
+        <input id = "remember-me" name ="remember-me" type = "checkbox"/>자동 로그인
         <button type="submit">Login</button>
     </form>
 </body>
