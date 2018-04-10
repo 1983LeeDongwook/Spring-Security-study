@@ -25,8 +25,4 @@ public class USER implements Serializable {
     private String pw;
     private String name;
 
-    public USER(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        this(username, password, true, true, true, true, authorities);
-    }
-
 }
