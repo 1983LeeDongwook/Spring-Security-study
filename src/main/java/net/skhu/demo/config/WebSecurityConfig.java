@@ -17,6 +17,10 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 /**
@@ -41,7 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/error", "/error2 ").permitAll()
+                //preFlight 요청은 인증처리를 안하겠다.
+                // preFlight 요청은 authrization 헤더가 줄 이유가 없으므로 401응답을 하면 안된다.
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/", "/login-processing", "/login", "/error", "/error2 ").permitAll()
                 .antMatchers("/**").authenticated();
 
         http.csrf().disable();
@@ -137,4 +144,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     SpringSessionBackedSessionRegistry sessionRegistry() {
         return new SpringSessionBackedSessionRegistry<>(this.sessionRepository);
     }
+
+    /*@Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }*/
 }
