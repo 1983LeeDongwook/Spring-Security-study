@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //preFlight 요청은 인증처리를 안하겠다.
                 // preFlight 요청은 authrization 헤더가 줄 이유가 없으므로 401응답을 하면 안된다.
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/", "/login-processing", "/login", "/error", "/error2 ").permitAll()
+                .antMatchers("/login-processing", "/login", "/error").permitAll()
                 .antMatchers("/**").authenticated();
 
         http.csrf().disable();
@@ -73,9 +73,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .maximumSessions(1)
                 //이미 로그인 중일 경우 로그인이 안된다.
                 //false일 경우 기존 사용자의 세션이 종료된다.
-                .maxSessionsPreventsLogin(true)
+                .maxSessionsPreventsLogin(false)
                 //중복 로그인이 발생했을 경우 이동할 주소(원인을 알려줄 주소)
-                .expiredUrl("/error2")
+                .expiredUrl("/error")
                 //만료된 세션 전략?
                 //.expiredSessionStrategy()
                 //세션 레지스트리?
@@ -128,8 +128,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static class MyPasswordEncoder implements PasswordEncoder {
         @Override
         public String encode(CharSequence rawPassword) {
-            // 여기서는 이렇게 처리하였지만 예를들어 sha-2 / sha-3 같은 해시를 접목시킬 수 있다.
-            // 여기서는 간단히 EN-을 붙여 확인하는 용도!
+            //sha-2 / sha-3 같은 해시를 접목시킬 수 있다.
             return rawPassword.toString();
         }
 
@@ -144,17 +143,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     SpringSessionBackedSessionRegistry sessionRegistry() {
         return new SpringSessionBackedSessionRegistry<>(this.sessionRepository);
     }
-
-    /*@Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }*/
 }

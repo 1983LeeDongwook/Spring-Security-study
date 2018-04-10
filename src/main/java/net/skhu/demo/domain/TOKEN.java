@@ -1,10 +1,9 @@
 package net.skhu.demo.domain;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,15 +12,14 @@ import java.util.Date;
  */
 
 @Data
-@RedisHash("token")
-public class Token implements Serializable {
+@Entity
+public class TOKEN implements Serializable {
 
     private static final long serialVersionUID = 839035049585559894L;
 
     @Id
-    private String series;
-    @Indexed
     private String username;
+    private String series;
     private String token;
     private Date lastUsed;
 }

@@ -1,6 +1,6 @@
 package net.skhu.demo.repository;
 
-import net.skhu.demo.domain.Token;
+import net.skhu.demo.domain.TOKEN;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TokenRepositoryImpl  implements PersistentTokenRepository {
     @Override
     public void createNewToken(PersistentRememberMeToken persistentRememberMeToken) {
         logger.info("createNewToken");
-        Token newToken = new Token();
+        TOKEN newToken = new TOKEN();
         newToken.setUsername(persistentRememberMeToken.getUsername());
         newToken.setToken(persistentRememberMeToken.getTokenValue());
         newToken.setSeries(persistentRememberMeToken.getSeries());
@@ -39,9 +39,9 @@ public class TokenRepositoryImpl  implements PersistentTokenRepository {
     @Override
     public void updateToken(String series, String tokenValue, Date lastUsed) {
         logger.info("updateToken");
-        Optional<Token> token = tokenRepository.findById(series);
+        Optional<TOKEN> token = tokenRepository.findById(series);
         if(token.isPresent()) {
-            Token updateToken = token.get();
+            TOKEN updateToken = token.get();
             updateToken.setToken(tokenValue);
             updateToken.setLastUsed(lastUsed);
             updateToken.setSeries(series);
@@ -52,12 +52,13 @@ public class TokenRepositoryImpl  implements PersistentTokenRepository {
     @Override
     public PersistentRememberMeToken getTokenForSeries(String series) {
         logger.info("persistentToken");
-        Optional<Token> token = tokenRepository.findById(series);
+        Optional<TOKEN> token = tokenRepository.findBySeries(series);
         if(token.isPresent()) {
             PersistentRememberMeToken persistentRememberMeToken =
                     new PersistentRememberMeToken(token.get().getUsername(), series, token.get().getToken(), token.get().getLastUsed());
             return persistentRememberMeToken;
         }else {
+            logger.info("persistentToken failed");
         }
         return null;
     }
@@ -65,7 +66,7 @@ public class TokenRepositoryImpl  implements PersistentTokenRepository {
     @Override
     public void removeUserTokens(String username) {
         logger.info("removeToken");
-        Optional<Token> token = tokenRepository.findByUsername(username);
+        Optional<TOKEN> token = tokenRepository.findById(username);
         logger.info(token.get().toString());
         if(token.isPresent()) tokenRepository.delete(token.get());
     }

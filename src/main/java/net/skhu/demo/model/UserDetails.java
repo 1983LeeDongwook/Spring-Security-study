@@ -4,6 +4,8 @@ import net.skhu.demo.domain.USER;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
+import java.io.Serializable;
+
 /**
  * Created by ds on 2018-04-10.
  */

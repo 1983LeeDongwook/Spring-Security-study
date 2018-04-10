@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h1>현재 로그인한 사용자 : ${user.name}</h1>
+<h1>현재 로그인한 사용자 : ${user}</h1>
 <a class="btn btn-default" href="logout" role="button" style="text-align: center">Logout</a>
 
 </body>
