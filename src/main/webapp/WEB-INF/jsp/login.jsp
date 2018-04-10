@@ -14,15 +14,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <form method="post" action="/login-processing">
-        <label>
-            <input type="text" class="form-control" placeholder="id" name="id" autofocus="autofocus">
-        </label>
-        <label>
-            <input type="password" class="form-control" placeholder="password" name="pw">
-        </label>
-        <input id = "remember-me" name ="remember-me" type = "checkbox"/>자동 로그인
-        <button type="submit">Login</button>
-    </form>
+<form method="post" action="/login-processing">
+    <label>
+        <input type="text" class="form-control" placeholder="id" name="id" autofocus="autofocus">
+    </label>
+    <label>
+        <input type="password" class="form-control" placeholder="password" name="pw">
+    </label>
+    <input id = "remember-me" name ="remember-me" type = "checkbox"/>자동 로그인
+    <button type="submit">Login</button>
+</form>
 </body>
 </html>

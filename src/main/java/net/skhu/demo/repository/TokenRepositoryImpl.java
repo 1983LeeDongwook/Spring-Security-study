@@ -15,6 +15,9 @@ import java.util.Optional;
  * Created by ds on 2018-04-10.
  */
 
+/**
+ * PersistentTokenRepository을 구현
+ */
 @Transactional
 public class TokenRepositoryImpl  implements PersistentTokenRepository {
 
